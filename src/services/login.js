@@ -1,5 +1,11 @@
 class LoginService {
   login(credential) {
+    return {
+      user: {
+        username: 'John',
+        role: 'CANDIDATE',
+      },
+    };
   }
 
   storeUserToLocalStorage(user) {

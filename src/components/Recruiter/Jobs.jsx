@@ -1,186 +1,52 @@
-import { Link, useNavigate } from 'react-router-dom';
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../../App.jsx';
+import React, { useContext, useEffect, useState } from 'react';
 
-const pages = ['Việc làm', 'Công ty'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-function Jobs() {
-  const navigate = useNavigate();
-  const user = useContext(UserContext);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+import Grid from '@mui/material/Grid';
+
+import UserContext from '../../App.jsx';
+import RecruiterService from '../../services/recruiter.js';
+import { JobsSideBar } from './Jobs/JobsSideBar.jsx';
+import { SelectedJob } from './Jobs/SelectedJob.jsx';
+
+export default function Jobs() {
+  const recruiter = useContext(UserContext);
+
+  const [status, setStatus] = useState('Loading');
+  const [jobs, setJobs] = useState([]);
+  const [jobIndex, setJobIndex] = useState(-1);
+
+  const getJobsByRecruiter = async () => {
+    try {
+      const jobs = await RecruiterService.getJobsByRecruiter(recruiter?.id);
+      setJobs(jobs);
+      setJobIndex(0);
+      setStatus('Success')
+    } catch (error) {
+      console.log(error.message);
+      setStatus('Error');
+    }
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  useEffect(() => {
+    getJobsByRecruiter();
+  }, []);
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  useEffect(() => {
+    console.log(jobs);
+  }, [jobs]);
 
-  const handleLogout = () => {
-    // Thêm logic đăng xuất ở đây
-    loginServices.removeUserFromLocalStorage();
-    setUser(null);
-  };
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-  return (
+  return status !== 'Success' ? (
+    <p>{status}</p>
+  ) : (
     <>
-      <AppBar position='static'>
-        <Container maxWidth='xl'>
-          <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Tindin
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size='large'
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleOpenNavMenu}
-                color='inherit'
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant='h5'
-              noWrap
-              component='a'
-              href=''
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Tindin
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title='Open settings'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) =>
-                  setting === 'Logout' ? (
-                    <MenuItem key={setting} onClick={handleLogout}>
-                      <Typography textAlign='center'>{setting}</Typography>
-                    </MenuItem>
-                  ) : (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>{setting}</Typography>
-                    </MenuItem>
-                  ),
-                )}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <Typography variant='h4'>Bài đăng tuyển dụng</Typography>
-    
+    {/* Navigation bar */}
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <JobsSideBar jobs={jobs} setJobIndex={setJobIndex} />
+        </Grid>
+        <Grid item xs={9}>
+          <SelectedJob job={jobs[jobIndex]} />
+        </Grid>
+      </Grid>
     </>
   );
 }
-
-export default Jobs;

@@ -20,7 +20,7 @@ const EditJob = () => {
     })
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get(`/api/${jobId}`)
+        axios.get(`/api/jobs/${jobId}`)
         .then(res => {
             setValue({...value, title: res.data.title,
             description: res.data.description,
@@ -40,6 +40,7 @@ const EditJob = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        alert("Form Edited");
         axios.put(`/api/${jobId}`, value)
         .then(res => {
             navigate('/');

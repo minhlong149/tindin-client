@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { TextField, Button, Container } from "@mui/material";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CreateJobs = () => {
     const [title, setTitle] = useState("");
@@ -13,10 +14,57 @@ const CreateJobs = () => {
     const [skill, setSkill] = useState("");
     const [experience, setExperience] = useState("");
     const [degree, setDegree] = useState("");
-
+    const [value, setValue] = useState({
+        title: "",
+        description: "",
+        jobType: "",
+        salary: "",
+        creatingDate: "",
+        closingDate: "",
+        major: "",
+        skill: "",
+        experience: "",
+        degree: ""
+    })
+    const getApplicant = async () => {
+        try {
+          const response = await ApplicantService.getApplicantById(candidateId);
+          setApplicant(response);
+          setStatus('Success');
+        } catch (error) {
+          console.log(error);
+          setStatus('User not found');
+        }
+      };
+    
+      useEffect(() => {
+        getApplicant();
+      }, []);
+    
+      useEffect(() => {
+        console.log(applicant);
+      }, [applicant]);
+    
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert("Form Submitted");
+        //alert("Form Submitted");
+        axios.post(`/api/jobs`, value)
+        .then(res => {
+            setValue({...value, title: res.data.title,
+            description: res.description,
+            jobType: res.jobType,
+            salary: res.salary,
+            creatingDate: res.creatingDate,
+            closingDate: res.closingDate,
+            major: res.major,
+            skill: res.skill,
+            experience: res.experience,
+            degree: res.degree
+            })
+
+            //navigate('/');
+        })
+        .catch(err => console.log(err))
     }
     return(
         <React.Fragment>
@@ -104,7 +152,7 @@ const CreateJobs = () => {
                     fullWidth
                     sx={{mb: 5}}
                     required
-                    onChange ={(e) => setCreatingDate(e)}
+                    onChange ={(e) => setCreatingDate(e.target.value)}
                 />
                 <TextField
                     label = "Close date"
@@ -113,7 +161,7 @@ const CreateJobs = () => {
                     fullWidth
                     sx={{mb: 5}}
                     required
-                    onChange ={(e) => setClosingDate(e)}
+                    onChange ={(e) => setClosingDate(e.target.value)}
                 />
                 <Button variant='contained' color = "primary" type = "submit">Submit</Button>               
             </form>

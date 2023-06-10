@@ -142,9 +142,15 @@ function Jobs() {
     GetJobRecommend();
   }, [page]);
   console.log(jobs);
+
   const inforJob = (job) => {
     navigate(`/jobs/${job.id}`);
   };
+
+  const handleSearch = () => {
+    navigate(`/search`);
+  };
+  
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
@@ -380,7 +386,7 @@ function Jobs() {
               </Paper>
               <Button
                 variant='contained'
-                sx={{ marginLeft: 3, backgroundColor: '#FF7D55', p: '10px' }}
+                sx={{ marginLeft: 3, backgroundColor: '#FF7D55', p: '10px' }} onClick={() => handleSearch()}
               >
                 Search
               </Button>
@@ -398,9 +404,7 @@ function Jobs() {
             component='button'
             variant='body2'
             color='inherit'
-            onClick={() => {
-              // Xử lý sự kiện khi người dùng nhấp vào liên kết "Xem thêm"
-            }}
+            onClick={() => handleSearch()}
           >
             Xem thêm
           </Link>

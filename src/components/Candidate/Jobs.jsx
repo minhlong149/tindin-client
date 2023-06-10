@@ -34,25 +34,24 @@ import 'slick-carousel/slick/slick-theme.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
+import NavBar from './NavBar.jsx';
 const pages = ['Việc làm', 'Công ty'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Jobs() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [org, setOrg] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-   const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-      const images = [
-        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Flazada_hr3bn_105082.png&w=3840&q=75',
-        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Fchailease_hrbn1_122576.jpg&w=3840&q=75',
-        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2FMondelez_hrbn_123314.jpg&w=3840&q=75',
-      ];
+  const images = [
+    'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Flazada_hr3bn_105082.png&w=3840&q=75',
+    'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Fchailease_hrbn1_122576.jpg&w=3840&q=75',
+    'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2FMondelez_hrbn_123314.jpg&w=3840&q=75',
+  ];
 
   const BackgroundSlider = () => {
     const settings = {
@@ -82,30 +81,11 @@ function Jobs() {
       </Slider>
     );
   };
-   const handleOpenNavMenu = (event) => {
-     setAnchorElNav(event.currentTarget);
-   };
-   const handleOpenUserMenu = (event) => {
-     setAnchorElUser(event.currentTarget);
-   };
+ 
+  const [age, setAge] = React.useState('');
 
-   const handleCloseNavMenu = () => {
-     setAnchorElNav(null);
-   };
-
-   const handleCloseUserMenu = () => {
-     setAnchorElUser(null);
-   };
-
-   const handleLogout = () => {
-     // Thêm logic đăng xuất ở đây
-     loginServices.removeUserFromLocalStorage();
-     setUser(null);
-   };
-   const [age, setAge] = React.useState('');
-
-   const handleChange = (event) => {
-     setAge(event.target.value);
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -115,7 +95,6 @@ function Jobs() {
     setPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
-   
   const getOrganization = async () => {
     try {
       const response = await ApplicantService.getOrganizationInHCM();
@@ -124,21 +103,21 @@ function Jobs() {
       console.log(error);
     }
   };
-  
-   useEffect(() => {
-     getOrganization();
-   }, []);
+
+  useEffect(() => {
+    getOrganization();
+  }, []);
 
   console.log(user);
   const clickOrganization = (organi) => {
-     navigate(`/organizations/${organi.id}`);
-  }
+    navigate(`/organizations/${organi.id}`);
+  };
   const GetJobRecommend = async () => {
     setIsLoading(true);
     const res = await ApplicantService.getRecommendJobByApplicantId(user.user.account_id, page);
     setJobs(res.data);
     setIsLoading(false);
-  }
+  };
   useEffect(() => {
     GetJobRecommend();
   }, [page]);
@@ -159,134 +138,7 @@ function Jobs() {
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
-      <AppBar position='fixed'>
-        <Container maxWidth='xl'>
-          <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Link to='/'>
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Tindin
-              </Typography>
-            </Link>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size='large'
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleOpenNavMenu}
-                color='inherit'
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant='h5'
-              noWrap
-              component='a'
-              href=''
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Tindin
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title='Open settings'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) =>
-                  setting === 'Logout' ? (
-                    <MenuItem key={setting} onClick={handleLogout}>
-                      <Typography textAlign='center'>{setting}</Typography>
-                    </MenuItem>
-                  ) : (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>{setting}</Typography>
-                    </MenuItem>
-                  ),
-                )}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+      <NavBar/>
 
       <Box
         id='background-image&searchbar'
@@ -392,7 +244,8 @@ function Jobs() {
               </Paper>
               <Button
                 variant='contained'
-                sx={{ marginLeft: 3, backgroundColor: '#FF7D55', p: '10px' }} onClick={() => handleSearch()}
+                sx={{ marginLeft: 3, backgroundColor: '#FF7D55', p: '10px' }}
+                onClick={() => handleSearch()}
               >
                 Search
               </Button>
@@ -406,12 +259,7 @@ function Jobs() {
           <Typography variant='h4' margin={2}>
             Công ty nổi bật
           </Typography>
-          <Link
-            component='button'
-            variant='body2'
-            color='inherit'
-            onClick={() => handleSearch()}
-          >
+          <Link component='button' variant='body2' color='inherit' onClick={() => handleSearch()}>
             Xem thêm
           </Link>
         </Box>
@@ -493,7 +341,7 @@ function Jobs() {
                   <Grid container spacing={2} columnSpacing={2} key={page}>
                     {jobs.map((job, index) => (
                       <Grid item xs={3} key={index}>
-                        <CardActionArea onClick={ ()=>inforJob(job)}>
+                        <CardActionArea onClick={() => inforJob(job)}>
                           <Card style={{ width: 300, height: 150 }}>
                             <Typography
                               gutterBottom

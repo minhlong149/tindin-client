@@ -42,7 +42,6 @@ export default function Profile() {
       setApplicant(response);
     } catch (error) {
       console.log(error);
-      // TODO: Show error modal on screen
     }
   };
 

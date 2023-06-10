@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,64 +13,62 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 
 const pages = ['Việc làm', 'Công ty'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-function Jobs() {
-  const navigate = useNavigate();
-  const user = useContext(UserContext);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+function NavBar() {
+    const user = useContext(UserContext);
+    const navigate = useNavigate();
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+     const handleOpenNavMenu = (event) => {
+       setAnchorElNav(event.currentTarget);
+     };
+     const handleOpenUserMenu = (event) => {
+       setAnchorElUser(event.currentTarget);
+     };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+     const handleCloseNavMenu = () => {
+       setAnchorElNav(null);
+     };
 
-  const handleLogout = () => {
-    // Thêm logic đăng xuất ở đây
-    loginServices.removeUserFromLocalStorage();
-    setUser(null);
-  };
-  const [age, setAge] = React.useState('');
+     const handleCloseUserMenu = () => {
+       setAnchorElUser(null);
+     };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+     const handleLogout = () => {
+       // Thêm logic đăng xuất ở đây
+       loginServices.removeUserFromLocalStorage();
+       setUser(null);
+    };
+
   return (
     <>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Tindin
-            </Typography>
+            <Link to='/' style={{ textDecoration: 'none', color:'inherit' }}>
+              <Typography
+                variant='h6'
+                noWrap
+                component='a'
+                sx={{
+                  mr: 2,
+                  display: { xs: 'none', md: 'flex' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                Tindin
+              </Typography>
+            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'
@@ -177,10 +175,9 @@ function Jobs() {
           </Toolbar>
         </Container>
       </AppBar>
-      <Typography variant='h4'>Bài đăng tuyển dụng</Typography>
-    
+      <Box marginTop={8.5}></Box>
     </>
   );
 }
 
-export default Jobs;
+export default NavBar;

@@ -1,12 +1,14 @@
+import React, { useState } from 'react';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
 
 import { AppliedCandidates } from './AppliedCandidates.jsx';
+import { RecommendedCandidates } from './RecommendedCandidates.jsx';
 
 export function SelectedJob({ job }) {
   const [value, setValue] = useState(0);
@@ -27,8 +29,8 @@ export function SelectedJob({ job }) {
         <AppliedCandidates jobId={job.id} />
       </TabPanel>
 
-      <TabPanel value={value} index={2}>
-        <p>Recommended</p>
+      <TabPanel value={value} index={1}>
+        <RecommendedCandidates jobId={job.id} />
       </TabPanel>
     </Card>
   );

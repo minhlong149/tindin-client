@@ -8,7 +8,7 @@ import { JobsSideBar } from './Jobs/JobsSideBar.jsx';
 import { SelectedJob } from './Jobs/SelectedJob.jsx';
 
 export default function Jobs() {
-  const recruiter = useContext(UserContext);
+  const user = useContext(UserContext);
 
   const [status, setStatus] = useState('Loading');
   const [jobs, setJobs] = useState([]);
@@ -16,7 +16,7 @@ export default function Jobs() {
 
   const getJobsByRecruiter = async () => {
     try {
-      const jobs = await RecruiterService.getJobsByRecruiter(recruiter?.id);
+      const jobs = await RecruiterService.getJobsByRecruiter(user?.id || 5);
       setJobs(jobs);
       setJobIndex(0);
       setStatus('Success')

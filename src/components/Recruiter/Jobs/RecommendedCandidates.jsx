@@ -4,15 +4,15 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 
 import JobService from '../../../services/job.js';
-import { CandidateSmall } from './CandidateSmall.jsx';
+import { CandidateSmaller } from './CandidateSmaller.jsx';
 
-export function AppliedCandidates({ jobId }) {
+export function RecommendedCandidates({ jobId }) {
   const [candidatesStatus, setCandidatesStatus] = useState('Loading');
   const [candidates, setCandidates] = useState([]);
 
   const getCandidatesByJob = async (jobId) => {
     try {
-      const candidates = await JobService.getCandidatesByJob(jobId);
+      const candidates = await JobService.getRecommendedCandidatesByJob(jobId);
       setCandidates(candidates);
       setCandidatesStatus('Success');
     } catch (error) {
@@ -45,11 +45,11 @@ export function AppliedCandidates({ jobId }) {
       </Typography>
     );
   }
-  
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {candidates.map((candidate) => (
-        <CandidateSmall candidate={candidate} />
+        <CandidateSmaller candidate={candidate} />
       ))}
     </List>
   );

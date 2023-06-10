@@ -46,6 +46,7 @@ function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+   const [searchTerm, setSearchTerm] = useState('');
 
       const images = [
         'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Flazada_hr3bn_105082.png&w=3840&q=75',
@@ -148,9 +149,13 @@ function Jobs() {
   };
 
   const handleSearch = () => {
-    navigate(`/search`);
+    event.preventDefault();
+    // Lấy giá trị của thanh tìm kiếm
+    const searchTerm = document.querySelector('input[aria-label="Enter job title"]').value;
+    // Điều hướng đến trang kết quả tìm kiếm và truyền giá trị của thanh tìm kiếm vào đường dẫn URL
+    navigate(`/search?query=${searchTerm}`);
   };
-  
+
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
@@ -158,11 +163,11 @@ function Jobs() {
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Link to='/'>
             <Typography
               variant='h6'
               noWrap
               component='a'
-              href='/'
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -174,7 +179,8 @@ function Jobs() {
               }}
             >
               Tindin
-            </Typography>
+              </Typography>
+            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'

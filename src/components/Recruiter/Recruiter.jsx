@@ -3,6 +3,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Jobs from './Jobs.jsx';
+import CreateJobs from './CreateJobs.jsx';
+import EditJob from './EditJob.jsx';
 
 function Recruiter() {
   return (
@@ -13,13 +15,13 @@ function Recruiter() {
         <Route path='/' element={<Jobs />} />
 
         {/* Create a new job */}
-        {/* <Route path='/jobs/create' element={<CreateJob />} /> */}
+        <Route path='/jobs/create' element={<CreateJobs />} />
 
         {/* View job description and candidates applied */}
         {/* <Route path='/jobs/:jobId' element={<Job />} /> */}
 
         {/* Edit job description */}
-        {/* <Route path='/jobs/:jobId/edit' element={<EditJob />} /> */}
+        <Route path='/jobs/:jobId/edit' element={<EditJob />} />
 
         {/* View list of candidates, to find a candidate */}
         {/* <Route path='/candidates' element={<Candidates />} /> */}

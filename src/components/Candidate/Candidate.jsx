@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import Jobs from './Jobs.jsx';
+import Profile from './Profile.jsx';
 
 function Candidate() {
   return (
@@ -25,7 +25,7 @@ function Candidate() {
         {/* <Route path='/search' element={<Search />} /> */}
 
         {/* View & Update candidate profile */}
-        {/* <Route path='/:username' element={<Profile />} /> */}
+        <Route path='/:candidateId' element={<Profile />} />
       </Routes>
     </>
   );

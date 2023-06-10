@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import * as React from 'react';
+import ApplicantService from '../../services/applicant.js';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,21 +14,26 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
-import TextField from '@mui/material/TextField';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, SvgIcon } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Carousel from 'react-material-ui-carousel';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App.jsx';
-import { Label, WidthFull } from '@mui/icons-material';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { dark } from '@mui/material/styles/createPalette.js';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
 const pages = ['Việc làm', 'Công ty'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -36,8 +42,45 @@ function Jobs() {
   const user = useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [data, setData] = useState([]);
+  const [org, setOrg] = useState([]);
   const [jobs, setJobs] = useState([]);
+  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+      const images = [
+        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Flazada_hr3bn_105082.png&w=3840&q=75',
+        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2Fchailease_hrbn1_122576.jpg&w=3840&q=75',
+        'https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2FMondelez_hrbn_123314.jpg&w=3840&q=75',
+      ];
+
+  const BackgroundSlider = () => {
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      nextArrow: null,
+      prevArrow: null,
+    };
+
+    return (
+      <Slider {...settings}>
+        {images.map((image) => (
+          <div
+            key={image}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <img src={image} style={{ opacity: 0.5 }} width={1500} alt='' />
+          </div>
+        ))}
+      </Slider>
+    );
+  };
    const handleOpenNavMenu = (event) => {
      setAnchorElNav(event.currentTarget);
    };
@@ -63,35 +106,49 @@ function Jobs() {
    const handleChange = (event) => {
      setAge(event.target.value);
   };
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
-   const settingsSlider = {
-     dots: true,
-     infinite: true,
-     speed: 500,
-     slidesToShow: 1,
-     slidesToScroll: 1,
-   };
+  const handlePrevPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
    
+  const getOrganization = async () => {
+    try {
+      const response = await ApplicantService.getOrganizationInHCM();
+      setOrg(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
    useEffect(() => {
-     fetch('/api/organizations?location=Hồ Chí Minh')
-       .then((response) => response.json())
-       .then((data) => setData(data));
+     getOrganization();
    }, []);
-  console.log(data);
+
   console.log(user);
   const clickOrganization = (organi) => {
      navigate(`/organizations/${organi.id}`);
-   }
+  }
+  const GetJobRecommend = async () => {
+    setIsLoading(true);
+    const res = await ApplicantService.getRecommendJobByApplicantId(user.user.account_id, page);
+    setJobs(res.data);
+    setIsLoading(false);
+  }
   useEffect(() => {
-    fetch(`/api/jobs?applicantId=${user.account_id}`)
-      .then((response) => response.json())
-      .then((data) => setJobs(data));
-  }, []);
+    GetJobRecommend();
+  }, [page]);
   console.log(jobs);
+  const inforJob = (job) => {
+    navigate(`/jobs/${job.id}`);
+  };
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -220,57 +277,116 @@ function Jobs() {
       </AppBar>
 
       <Box
-        id='search-bar'
+        id='background-image&searchbar'
+        position={'relative'}
+        marginTop={8.5}
         sx={{
-          flexGrow: 1,
-          maxWidth: 600,
-          minWidth: 120,
-          m: 5,
-          px: 2,
-          py: 2,
-          backgroundColor: 'aliceblue',
+          position: 'relative',
+          width: '100%',
+          height: 600,
         }}
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        component='form'
-        noValidate
-        autoComplete='off'
-        borderRadius={5}
       >
-        <Grid container spacing={0} justifyContent={'center'} alignItems={'center'}>
-          <Grid>
-            <TextField
-              fullWidth
-              id='standard-basic'
-              placeholder='Enter job title'
-              variant='filled'
-            />
-          </Grid>
-          <Grid >
-            <FormControl fullWidth variant='filled'>
-              <Select
-                id='city-select'
-                displayEmpty
-                value={age}
-                textAlign='center'
-                onChange={handleChange}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: -1,
+          }}
+        >
+          <BackgroundSlider />
+        </Box>
+        <Box display='flex' justifyContent='center' alignItems='center'>
+          <Box
+            id='search-bar'
+            width={1000}
+            sx={{
+              flexGrow: 1,
+              maxWidth: 600,
+              minWidth: 120,
+              m: 5,
+              px: 2,
+              py: 2,
+            }}
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            component='form'
+            noValidate
+            autoComplete='off'
+            borderRadius={5}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 2,
+                borderRadius: 2,
+                backgroundColor: 'rgb(0 0 0 / 40%)',
+              }}
+            >
+              <Paper
+                component='form'
+                sx={{
+                  p: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: 700,
+                }}
               >
-                <MenuItem disabled value=''>
-                  <em>Select city</em>{' '}
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid>
-            <Button sx={{ width: '100%' }} variant='contained'>
-              Search
-            </Button>
-          </Grid>
-        </Grid>
+                <SearchOutlinedIcon></SearchOutlinedIcon>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder='Enter job title'
+                  inputProps={{ 'aria-label': 'Enter job title' }}
+                />
+                <Divider
+                  orientation='vertical'
+                  flexItem
+                  variant='middle'
+                  sx={{ backgroundColor: '' }}
+                />
+                <FormControl
+                  sx={{
+                    'minWidth': 200,
+                    'border': 0,
+                    '& .MuiInput-underline:before': {
+                      borderBottom: 'none',
+                    },
+                    '& .MuiInput-underline:after': {
+                      borderBottom: 'none',
+                    },
+                  }}
+                  variant='standard'
+                >
+                  <Select
+                    id='city-select'
+                    displayEmpty
+                    value={age}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'Select city' }}
+                  >
+                    <MenuItem disabled value=''>
+                      <em>Select city</em>{' '}
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </Paper>
+              <Button
+                variant='contained'
+                sx={{ marginLeft: 3, backgroundColor: '#FF7D55', p: '10px' }}
+              >
+                Search
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       <Box id='top-cty' sx={{ px: 5, py: 5, backgroundColor: '#F7F7F7' }}>
@@ -290,7 +406,7 @@ function Jobs() {
           </Link>
         </Box>
         <Stack direction='row' spacing={2}>
-          {data.slice(0, 5).map((organization, index) => (
+          {org.slice(0, 5).map((organization, index) => (
             <Card sx={{ width: 1, height: 400 }}>
               <CardActionArea>
                 <CardMedia
@@ -324,36 +440,110 @@ function Jobs() {
         </Stack>
       </Box>
       <section id='recommend-job'>
-        <div>
-          <Typography variant='h4' margin={2}>
-            Việc làm gợi ý
-          </Typography>
-          {/* <Carousel>
-            {data.map((page, pageIndex) => (
-              <Grid container key={pageIndex}>
-                {page.map((card, cardIndex) => (
-                  <Grid item xs={4} key={cardIndex}>
-                    <Card>
-                      <Typography gutterBottom variant='h5' component='div' textAlign={'center'}>
-                        {card.title}
-                      </Typography>
-                      <Typography gutterBottom variant='h6' component='div' textAlign={'center'}>
-                        {card.name}
-                      </Typography>
-                      <Typography gutterBottom variant='body1' component='div' textAlign={'center'}>
-                        {card.salary}
-                      </Typography>
-                      <Typography gutterBottom variant='body1' component='div' textAlign={'center'}>
-                        {card.local}
-                      </Typography>
-                    </Card>
+        <div sx={{ justifyContent: 'center' }}>
+          <Box borderRadius={5} border={1} color={'#0d47a1'} margin={5}>
+            <Typography
+              variant='h4'
+              color={dark}
+              sx={{
+                backgroundColor: '#e3f2fd',
+                padding: 3,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              }}
+            >
+              Việc làm gợi ý
+            </Typography>
+            <Box
+              sx={{
+                borderRadius: 2,
+                marginTop: 5,
+                mx: 5,
+                marginBottom: 5,
+                px: 3,
+                paddingTop: 3,
+                paddingBottom: 2,
+                backgroundColor: '#F7F7F7',
+              }}
+            >
+              {isLoading ? (
+                <Box
+                  sx={{
+                    px: 5,
+                    py: 5,
+                    backgroundColor: '#F7F7F7',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Carousel>
+                  <Grid container spacing={2} columnSpacing={2} key={page}>
+                    {jobs.map((job, index) => (
+                      <Grid item xs={3} key={index}>
+                        <CardActionArea onClick={ ()=>inforJob(job)}>
+                          <Card style={{ width: 300, height: 150 }}>
+                            <Typography
+                              gutterBottom
+                              variant='h6'
+                              component='div'
+                              textAlign={'center'}
+                              margin={2}
+                            >
+                              {job.title}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant='h7'
+                              component='div'
+                              textAlign={'center'}
+                            >
+                              {job.organizationDto.name}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant='body1'
+                              component='div'
+                              textAlign={'center'}
+                            >
+                              {job.salary} vnđ
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant='body2'
+                              component='div'
+                              textAlign={'center'}
+                            >
+                              {job.organizationDto.location}
+                            </Typography>
+                          </Card>
+                        </CardActionArea>
+                      </Grid>
+                    ))}
                   </Grid>
-                ))}
-              </Grid>
-            ))}
-          </Carousel> */}
+                  {/* ))} */}
+                </Carousel>
+              )}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button onClick={handlePrevPage} disabled={page === 0}>
+                  Trang trước
+                </Button>
+                <Button onClick={handleNextPage}>Trang sau</Button>
+              </Box>
+            </Box>
+          </Box>
         </div>
       </section>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <img src='https://images.vietnamworks.com/logo/woori_cpbn_117981.png' width={1400} />
+      </div>
     </>
   );
 }

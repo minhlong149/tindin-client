@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Organization from '../../components/Organization/Organization.jsx'
 import Jobs from './Jobs.jsx';
+import Job from './Job.jsx'
 
 function Candidate() {
   return (
@@ -13,7 +14,7 @@ function Candidate() {
         <Route path='/' element={<Jobs />} />
 
         {/* View details of a job & apply */}
-        {/* <Route path='/jobs/:jobId' element={<Job />} /> */}
+        <Route path='/jobs/:jobId' element={<Job />} />
 
         {/* View saved jobs */}
         {/* <Route path='/jobs/saved' element={<SavedJobs />} /> */}

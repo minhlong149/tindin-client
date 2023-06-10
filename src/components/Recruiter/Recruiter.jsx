@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Jobs from './Jobs.jsx';
+import Candidate from './Candidate.jsx';
 
 function Recruiter() {
   return (
@@ -26,7 +27,7 @@ function Recruiter() {
         {/* <Route path='/candidates' element={<Candidates />} /> */}
 
         {/* View candidate profile */}
-        {/* <Route path='/candidates/:candidateUsername' element={<Candidate />} /> */}
+        <Route path='/candidates/:candidateId' element={<Candidate />} />
 
         {/* View & Update recruiter profile, including organization details */}
         {/* <Route path='/:username' element={<Profile />} /> */}

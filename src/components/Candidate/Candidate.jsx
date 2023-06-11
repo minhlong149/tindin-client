@@ -5,9 +5,13 @@ import Organization from '../../components/Organization/Organization.jsx'
 import Jobs from './Jobs.jsx';
 import Job from './Job.jsx'
 import Search from './Search.jsx';
+import NavBar from './NavBar.jsx';
+
 function Candidate() {
   return (
     <>
+      <NavBar />
+
       {/* <Typography variant='h1'>Candidate</Typography> */}
       <Routes>
         {/* Candidate home page, list of jobs */}

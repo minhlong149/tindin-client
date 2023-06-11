@@ -9,7 +9,8 @@ import EditJob from './EditJob.jsx';
 function Recruiter() {
   return (
     <>
-      <Typography variant='h1'>Recruiter</Typography>
+      
+      {/* <Typography variant='h1'>Recruiter</Typography> */}
       <Routes>
         {/* Recruiter home page, list of created jobs */}
         <Route path='/' element={<Jobs />} />

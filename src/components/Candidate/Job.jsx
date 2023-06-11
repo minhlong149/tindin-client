@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import NavBar from './NavBar.jsx';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 import JobService from '../../services/job.js'
@@ -69,7 +68,6 @@ function Job() {
   console.log(isApply);
   return (
     <>
-      <NavBar />
       {isLoading ? (
         <Box
           sx={{

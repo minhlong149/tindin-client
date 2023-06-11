@@ -25,7 +25,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
-import NavBar from './NavBar.jsx';
 const pages = ['Việc làm', 'Công ty'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -129,7 +128,6 @@ function Jobs() {
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
-      <NavBar/>
 
       <Box
         id='background-image&searchbar'

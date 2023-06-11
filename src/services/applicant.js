@@ -4,7 +4,7 @@ class ApplicantService {
   async getApplicantById(id) {
     try {
       // const url = `api/applicants/1`;
-      const url = `api/applicants/${id}`;
+      const url = `/api/applicants/${id}`;
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
@@ -16,7 +16,7 @@ class ApplicantService {
   async updateApplicant(id, applicant) {
     try {
       // const url = `api/applicants/1`;
-      const url = `api/applicants/${id}`;
+      const url = `/api/applicants/${id}`;
       const response = await axios.put(url, applicant);
       return response.data;
     } catch (error) {

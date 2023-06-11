@@ -10,90 +10,87 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 
 export default function Organization() {
-    const organizationId = useParams();
-    const [status, setStatus] = useState('Loading');
-    const [organization, setOrganization] = useState({});
-    const [job, setJob] = useState({});
-    const getOrganization = async () => {
-        try {
-          const response = await OrganizationService.getOrganizationById(organizationId);
-          setOrganization(response);
-          setStatus('Success');
-        } catch (error) {
-          console.log(error);
-          setStatus('Organization not found');
-        }
-      };
-      useEffect(() => {
-        getOrganization();
-      }, []);
-    
-      useEffect(() => {
-        console.log(organization);
-      }, [organization]);
+  const { organizationId } = useParams();
 
+  const [organization, setOrganization] = useState({});
+  const getOrganization = async () => {
+    try {
+      const response = await OrganizationService.getOrganizationById(organizationId);
+      setOrganization(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      const getJobByOrganizationId = async (job) => {
-        try {
-          const response = await OrganizationService.getOrganizationById(organizationId, job);
-          setOrganization(response);
-          setStatus('Success');
-        } catch (error) {
-          console.log(error);
-          setStatus('Jobs of organization not found');
-        }
-      };
-      useEffect(() => {
-        getJobByOrganizationId();
-      }, []);
-    
-      useEffect(() => {
-        console.log(job);
-      }, [job]);
-      console.log(job);
-      
-      return (
-        <Stack alignItems='center' spacing={3}>
-            <Stack direction='row' spacing={4}>
-              {organization.name && (
-                  <Stack direction='row' alignItems='center' spacing={2}>
-                      <LocationOnIcon />
-                      <Typography variant='body2'>{organization.name}</Typography>
-                  </Stack>
-              )}
+  useEffect(() => {
+    getOrganization();
+  }, []);
 
-              {organization.email && (
-                  <Stack direction='row' alignItems='center' spacing={2}>
-                      <EmailIcon />
-                      <Typography variant='body2'>{organization.email}</Typography>
-                  </Stack>
-              )}
-              {organization.phone && (
-                  <Stack direction='row' alignItems='center' spacing={2}>
-                      <PhoneIcon />
-                      <Typography variant='body2'>{organization.phone}</Typography>
-                  </Stack>
-              )}
-              {organization.website && (
-                  <Stack direction='row' alignItems='center' spacing={2}>
-                      <WebsiteIcon />
-                      <Typography variant='body2'>{organization.website}</Typography>
-                  </Stack>
-              )}
-              {organization.location && (
-                <Stack direction='row' alignItems='center' spacing={2}>
-                    <Typography variant='body2'>{organization.location}</Typography>
-                </Stack>
-              )}
-              {organization.industry && (
-                <Stack direction='row' alignItems='center' spacing={2}>
-                    <Typography variant='body2'>{organization.industry}</Typography>
-                </Stack>
-              )}
-            </Stack>
+  useEffect(() => {
+    console.log({ organization });
+  }, [organization]);
 
-        </Stack>
+  const [job, setJob] = useState({});
+  const getJobByOrganizationId = async () => {
+    try {
+      const response = await OrganizationService.getJobByOrganizationId(organizationId);
+      setJob(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        
-      );
+  useEffect(() => {
+    getJobByOrganizationId();
+  }, []);
+
+  useEffect(() => {
+    console.log({ job });
+  }, [job]);
+
+  return (
+    <Stack alignItems='center' spacing={3}>
+      <Stack direction='row' spacing={4}>
+        {organization.name && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <LocationOnIcon />
+            <Typography variant='body2'>{organization.name}</Typography>
+          </Stack>
+        )}
+
+        {organization.email && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <EmailIcon />
+            <Typography variant='body2'>{organization.email}</Typography>
+          </Stack>
+        )}
+
+        {organization.phone && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <PhoneIcon />
+            <Typography variant='body2'>{organization.phone}</Typography>
+          </Stack>
+        )}
+
+        {organization.website && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <WebsiteIcon />
+            <Typography variant='body2'>{organization.website}</Typography>
+          </Stack>
+        )}
+
+        {organization.location && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <Typography variant='body2'>{organization.location}</Typography>
+          </Stack>
+        )}
+
+        {organization.industry && (
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <Typography variant='body2'>{organization.industry}</Typography>
+          </Stack>
+        )}
+      </Stack>
+    </Stack>
+  );
 }

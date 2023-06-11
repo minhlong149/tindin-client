@@ -7,6 +7,7 @@ class ApplicantService {
   getRecommendJobByApplicantId(userId, page) {
     return axios.get(`api/jobs?applicantId=${userId}&pageNumber=${page}&pageSize=12`);
   }
+
 }
 
 export default new ApplicantService();

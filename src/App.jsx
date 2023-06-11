@@ -54,3 +54,43 @@ function App() {
 }
 
 export default App;
+
+
+// import React, { useState } from 'react';
+
+// import Home from './components/Home.jsx';
+// import Login from './components/Login/Login.jsx';
+// import loginServices from './services/login.js';
+
+// export const UserContext = React.createContext();
+
+// function App() {
+//   const [user, setUser] = useState(null);
+
+//   const login = (credential) => {
+//     const user = loginServices.login(credential);
+//     if (user !== null) {
+//       setUser(user);
+//       loginServices.storeUserToLocalStorage(user);
+//     }
+//   };
+
+//   const logout = () => {
+//     loginServices.removeUserFromLocalStorage();
+//     setUser(null);
+//   };
+
+//   return (
+//     <>
+//       {user !== null ? (
+//         <UserContext.Provider value={user}>
+//           <Home logout={logout} />
+//         </UserContext.Provider>
+//       ) : (
+//         <Login login={login} />
+//       )}
+//     </>
+//   );
+// }
+
+// export default App;

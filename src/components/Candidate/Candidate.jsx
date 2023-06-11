@@ -5,6 +5,7 @@ import Organization from '../../components/Organization/Organization.jsx'
 import Jobs from './Jobs.jsx';
 import Job from './Job.jsx'
 import Search from './Search.jsx';
+import SavedJobs from './SaveJobs.jsx'
 function Candidate() {
   return (
     <>
@@ -17,7 +18,7 @@ function Candidate() {
         <Route path='/jobs/:jobId' element={<Job />} />
 
         {/* View saved jobs */}
-        {/* <Route path='/jobs/saved' element={<SavedJobs />} /> */}
+        <Route path='/jobs/saved' element={<SavedJobs />} />
 
         {/* View organization details */}
         <Route path='/organizations/:organizationId' element={<Organization />} />

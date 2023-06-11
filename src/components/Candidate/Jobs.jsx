@@ -1,19 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import * as React from 'react';
 import ApplicantService from '../../services/applicant.js';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -81,7 +72,7 @@ function Jobs() {
       </Slider>
     );
   };
- 
+
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
@@ -138,7 +129,7 @@ function Jobs() {
   return (
     <>
       {/* <Typography variant='h1'>Candidate</Typography> */}
-      <NavBar/>
+      <NavBar />
 
       <Box
         id='background-image&searchbar'
@@ -236,9 +227,11 @@ function Jobs() {
                     <MenuItem disabled value=''>
                       <em>Select city</em>{' '}
                     </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={10}>Cần Thơ</MenuItem>
+                    <MenuItem value={20}>Đà Nẵng</MenuItem>
+                    <MenuItem value={30}>Hà Nội</MenuItem>
+                    <MenuItem value={30}>Hải Phòng</MenuItem>
+                    <MenuItem value={30}>Hồ Chí Minh</MenuItem>
                   </Select>
                 </FormControl>
               </Paper>

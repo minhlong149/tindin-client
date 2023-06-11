@@ -71,7 +71,7 @@ function Jobs() {
       </Slider>
     );
   };
- 
+
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
@@ -225,9 +225,11 @@ function Jobs() {
                     <MenuItem disabled value=''>
                       <em>Select city</em>{' '}
                     </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={10}>Cần Thơ</MenuItem>
+                    <MenuItem value={20}>Đà Nẵng</MenuItem>
+                    <MenuItem value={30}>Hà Nội</MenuItem>
+                    <MenuItem value={30}>Hải Phòng</MenuItem>
+                    <MenuItem value={30}>Hồ Chí Minh</MenuItem>
                   </Select>
                 </FormControl>
               </Paper>

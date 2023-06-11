@@ -1,0 +1,43 @@
+.formContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid #3f51b5;
+  background-color: #fff;
+  border-radius: 2.5rem;
+  padding: 1.5rem;
+}
+
+.label {
+  color: #888;
+  font-size: 0.875rem;
+}
+
+.button {
+  background-color: #3f51b5;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.switchForm {
+  text-align: center;
+  color: #888;
+}
+
+.switchForm a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.switchForm a:hover {
+  text-decoration: underline;
+}

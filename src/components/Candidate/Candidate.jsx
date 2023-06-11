@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import SavedJobs from './SaveJobs.jsx'
 import Job from './Job.jsx';
 import Jobs from './Jobs.jsx';
 import NavBar from './NavBar.jsx';
@@ -23,7 +24,7 @@ function Candidate() {
         <Route path='/jobs/:jobId' element={<Job />} />
 
         {/* View saved jobs */}
-        {/* <Route path='/jobs/saved' element={<SavedJobs />} /> */}
+        <Route path='/jobs/saved' element={<SavedJobs />} />
 
         {/* View organization details */}
         <Route path='/organizations/:organizationId' element={<Organization />} />

@@ -13,6 +13,7 @@ import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
+import LaunchIcon from '@mui/icons-material/Launch';
 function Job() {
   const user = useContext(UserContext);
   const { jobId } = useParams();
@@ -37,10 +38,6 @@ function Job() {
      setJob(data);
      setRecruiter(data.recruiter);
      setOrg(data.recruiter.organization);
-     setDegree(data.requireDegrees);
-     setMajor(data.requireMajors);
-     setSkill(data.requireSkills);
-     setLevel(data.requireExperienceLevels)
      setIsLoading(false);
    }
    fetchJob();
@@ -131,7 +128,8 @@ function Job() {
               backgroundColor='#FFFFFF'
               width={700}
               sx={{ padding: 2, alignItems: 'flex-start' }}
-              height={500}
+                borderRadius={2}
+                marginBottom={10}
             >
               <Box>
                 {tabIndex === 0 && (
@@ -145,13 +143,64 @@ function Job() {
                       </Typography>
                     </Box>
                     <Box margin={2}>
-                      <Typography variant='h5' marginBottom={2}>
+                      <Typography variant='h5' marginBottom={2} marginTop={2}>
                         Job Requirement
                       </Typography>
-                     
+
+                      {job.requireDegrees && job.requireDegrees.length > 0 && (
+                        <>
+                          <Typography variant='body1' marginLeft={3}>
+                            Required Degrees:
+                          </Typography>
+                          {job.requireDegrees.map((degree, index) => (
+                            <Typography key={index} variant='body2' marginLeft={5}>
+                              {degree}
+                            </Typography>
+                          ))}
+                        </>
+                      )}
+
+                      {job.requireExperienceLevels && job.requireExperienceLevels.length > 0 && (
+                        <>
+                          <Typography variant='body1' marginLeft={3}>
+                            Required Experience:
+                          </Typography>
+                          {job.requireExperienceLevels.map((exper, index) => (
+                            <Typography key={index} variant='body2' marginLeft={5}>
+                              {exper}
+                            </Typography>
+                          ))}
+                        </>
+                      )}
+
+                      {job.jobrequireMajors && job.requireMajors.length > 0 && (
+                        <>
+                          <Typography variant='body1' marginLeft={3}>
+                            Required Major:
+                          </Typography>
+                          {job.jobrequireMajors.map((major, index) => (
+                            <Typography key={index} variant='body2' marginLeft={5}>
+                              {major}
+                            </Typography>
+                          ))}
+                        </>
+                      )}
+
+                      {job.requireSkills && job.requireSkills.length > 0 && (
+                        <>
+                          <Typography variant='body1' marginLeft={3}>
+                            Required Skills:
+                          </Typography>
+                          {job.requireSkills.map((skill, index) => (
+                            <Typography key={index} variant='body1' marginLeft={5}>
+                              {skill.skill}
+                            </Typography>
+                          ))}
+                        </>
+                      )}
                     </Box>
                     <Box margin={2}>
-                      <Typography variant='h5' marginBottom={2}>
+                      <Typography variant='h5' marginBottom={2} marginTop={2}>
                         Location
                       </Typography>
 
@@ -164,7 +213,17 @@ function Job() {
                 )}
                 {tabIndex === 1 && (
                   <Box>
-                    <Typography>Công Ty</Typography>
+                    <Link to={'/organizations/' + org.id} variant='body2' marginLeft={3}>
+                      <Typography marginLeft={3} padding={2}>
+                        <span>Xem thông tin chi tiết doanh nghiệp</span>
+                        <span>
+                          <LaunchIcon></LaunchIcon>
+                        </span>
+                      </Typography>
+                    </Link>
+                    <Typography variant='body2' marginLeft={3}>
+                      {org.description}
+                    </Typography>
                   </Box>
                 )}
               </Box>

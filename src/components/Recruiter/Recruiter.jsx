@@ -4,11 +4,12 @@ import { Route, Routes } from 'react-router-dom';
 
 import Jobs from './Jobs.jsx';
 import Candidate from './Candidate.jsx';
+import { NavBar } from './NavBar.jsx';
 
 function Recruiter() {
   return (
     <>
-      
+      <NavBar />
       {/* <Typography variant='h1'>Recruiter</Typography> */}
       <Routes>
         {/* Recruiter home page, list of created jobs */}

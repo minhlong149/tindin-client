@@ -8,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import WebsiteIcon from '@mui/icons-material/Language';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { List } from '@mui/material';
 
 export default function Organization() {
   const { organizationId } = useParams();

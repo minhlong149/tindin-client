@@ -6,7 +6,7 @@ import axios from "axios";
 const CreateJobs = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [jobType, setJobType] = useState("");
+    //const [jobType, setJobType] = useState("");
     const [salary, setSalary] = useState("");
     const [creatingDate, setCreatingDate] = useState("");
     const [closingDate, setClosingDate] = useState("");
@@ -17,7 +17,7 @@ const CreateJobs = () => {
     const [value, setValue] = useState({
         title: "",
         description: "",
-        jobType: "",
+        //jobType: "",
         salary: "",
         creatingDate: "",
         closingDate: "",
@@ -33,7 +33,7 @@ const CreateJobs = () => {
         .then(res => {
             setValue({...value, title: res.data.title,
             description: res.description,
-            jobType: res.jobType,
+            //jobType: res.jobType,
             salary: res.salary,
             creatingDate: res.creatingDate,
             closingDate: res.closingDate,
@@ -71,7 +71,7 @@ const CreateJobs = () => {
                     required
                     onChange ={e => setDescription(e.target.value)}
                 />
-                <TextField
+                {/* <TextField
                     label = "Job type"
                     type = "text"
                     value = {jobType}
@@ -79,7 +79,7 @@ const CreateJobs = () => {
                     sx={{mb: 5}}
                     required
                     onChange ={e => setJobType(e.target.value)}
-                />
+                /> */}
                 <TextField
                     label = "Salary"
                     type = "text"

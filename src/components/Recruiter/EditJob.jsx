@@ -9,7 +9,7 @@ const EditJob = () => {
         id: jobId,
         title: "",
         description: "",
-        jobType: "",
+        //jobType: "",
         salary: "",
         creatingDate: "",
         closingDate: "",
@@ -24,7 +24,7 @@ const EditJob = () => {
         .then(res => {
             setValue({...value, title: res.data.title,
             description: res.data.description,
-            jobType: res.data.jobType,
+            //jobType: res.data.jobType,
             salary: res.data.salary,
             creatingDate: res.data.creatingDate,
             closingDate: res.data.closingDate,
@@ -70,7 +70,7 @@ const EditJob = () => {
                     
                     onChange ={e => setValue({...value, description: e.target.value})}
                 />
-                <TextField
+                {/* <TextField
                     label = "Job type"
                     type = "text"
                     value = {value.jobType}
@@ -78,7 +78,7 @@ const EditJob = () => {
                     sx={{mb: 5}}
                     
                     onChange ={e => setValue({...value, jobType: e.target.value})}
-                />
+                /> */}
                 <TextField
                     label = "Salary"
                     type = "text"

@@ -41,7 +41,7 @@ const EditJob = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         alert("Form Edited");
-        axios.put(`/api/${jobId}`, value)
+        axios.put(`/api/jobs/${jobId}`, value)
         .then(res => {
             navigate('/');
         })

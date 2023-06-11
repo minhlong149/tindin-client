@@ -4,7 +4,7 @@ class LoginService {
       user: {
         account_id: 5,
         username: 'John',
-        role: 'CANDIDATE',
+        role: 'RECRUITER',
       },
     };
   }

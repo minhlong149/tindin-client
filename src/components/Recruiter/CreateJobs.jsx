@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { TextField, Button, Container } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const CreateJobs = () => {
@@ -29,7 +29,7 @@ const CreateJobs = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         //alert("Form Submitted");
-        axios.post(`/api/${jobId}`)
+        axios.post(`/api/jobs`)
         .then(res => {
             setValue({...value, title: res.data.title,
             description: res.description,

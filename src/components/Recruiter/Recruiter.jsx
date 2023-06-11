@@ -5,24 +5,27 @@ import { Route, Routes } from 'react-router-dom';
 import Jobs from './Jobs.jsx';
 import Candidate from './Candidate.jsx';
 import { NavBar } from './NavBar.jsx';
+import CreateJobs from './CreateJobs.jsx';
+import EditJob from './EditJob.jsx';
 
 function Recruiter() {
   return (
     <>
       <NavBar />
+    
       {/* <Typography variant='h1'>Recruiter</Typography> */}
       <Routes>
         {/* Recruiter home page, list of created jobs */}
         <Route path='/' element={<Jobs />} />
 
         {/* Create a new job */}
-        {/* <Route path='/jobs/create' element={<CreateJob />} /> */}
+        <Route path='/jobs/create' element={<CreateJobs />} />
 
         {/* View job description and candidates applied */}
         {/* <Route path='/jobs/:jobId' element={<Job />} /> */}
 
         {/* Edit job description */}
-        {/* <Route path='/jobs/:jobId/edit' element={<EditJob />} /> */}
+        <Route path='/jobs/:jobId/edit' element={<EditJob />} />
 
         {/* View list of candidates, to find a candidate */}
         {/* <Route path='/candidates' element={<Candidates />} /> */}

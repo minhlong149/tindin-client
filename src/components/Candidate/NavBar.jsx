@@ -17,7 +17,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 
 const pages = ['Việc làm', 'Công ty'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 function NavBar() {
     const user = useContext(UserContext);
@@ -43,7 +43,8 @@ function NavBar() {
        // Thêm logic đăng xuất ở đây
        loginServices.removeUserFromLocalStorage();
        setUser(null);
-    };
+  };
+
 
   return (
     <>
@@ -51,7 +52,7 @@ function NavBar() {
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Link to='/' style={{ textDecoration: 'none', color:'inherit' }}>
+            <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
               <Typography
                 variant='h6'
                 noWrap
@@ -163,6 +164,15 @@ function NavBar() {
                   setting === 'Logout' ? (
                     <MenuItem key={setting} onClick={handleLogout}>
                       <Typography textAlign='center'>{setting}</Typography>
+                    </MenuItem>
+                  ) : setting === 'Profile' ? (
+                    <MenuItem key={setting}>
+                      <Link
+                        to={'/' + user.user.account_id}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                      >
+                        <Typography textAlign='center'>{setting}</Typography>
+                      </Link>
                     </MenuItem>
                   ) : (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>

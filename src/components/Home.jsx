@@ -10,9 +10,9 @@ function Home({ logout }) {
   return (
     <section>
       {user.user.role === 'CANDIDATE' ? <Candidate /> : <Recruiter />}
-      <Button variant='contained' onClick={logout}>
+      {/* <Button variant='contained' onClick={logout}>
         Logout
-      </Button>
+      </Button> */}
     </section>
   );
 }

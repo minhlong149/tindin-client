@@ -26,29 +26,10 @@ const CreateJobs = () => {
         experience: "",
         degree: ""
     })
-    const getApplicant = async () => {
-        try {
-          const response = await ApplicantService.getApplicantById(candidateId);
-          setApplicant(response);
-          setStatus('Success');
-        } catch (error) {
-          console.log(error);
-          setStatus('User not found');
-        }
-      };
-    
-      useEffect(() => {
-        getApplicant();
-      }, []);
-    
-      useEffect(() => {
-        console.log(applicant);
-      }, [applicant]);
-    
     const handleSubmit = (event) => {
         event.preventDefault();
         //alert("Form Submitted");
-        axios.post(`/api/jobs`, value)
+        axios.post(`/api/${jobId}`)
         .then(res => {
             setValue({...value, title: res.data.title,
             description: res.description,

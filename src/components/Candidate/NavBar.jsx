@@ -19,32 +19,25 @@ import { UserContext } from '../../App.jsx';
 const pages = ['Việc làm', 'Công ty'];
 const settings = ['Profile', 'Logout'];
 
-function NavBar() {
-    const user = useContext(UserContext);
-    const navigate = useNavigate();
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-     const handleOpenNavMenu = (event) => {
-       setAnchorElNav(event.currentTarget);
-     };
-     const handleOpenUserMenu = (event) => {
-       setAnchorElUser(event.currentTarget);
-     };
-
-     const handleCloseNavMenu = () => {
-       setAnchorElNav(null);
-     };
-
-     const handleCloseUserMenu = () => {
-       setAnchorElUser(null);
-     };
-
-     const handleLogout = () => {
-       // Thêm logic đăng xuất ở đây
-       loginServices.removeUserFromLocalStorage();
-       setUser(null);
+function NavBar({ logout }) {
+  const user = useContext(UserContext);
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
     <>
@@ -162,7 +155,7 @@ function NavBar() {
               >
                 {settings.map((setting) =>
                   setting === 'Logout' ? (
-                    <MenuItem key={setting} onClick={handleLogout}>
+                    <MenuItem key={setting} onClick={logout}>
                       <Typography textAlign='center'>{setting}</Typography>
                     </MenuItem>
                   ) : setting === 'Profile' ? (

@@ -20,6 +20,10 @@ export function NavBar({logout}) {
     handleClose();
     navigate('/organizations/283');
   }
+  const toCreate = () => {
+    handleClose();
+    navigate('/jobs/create');
+  }
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -29,7 +33,6 @@ export function NavBar({logout}) {
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
               TindIn
             </Typography>
-
           </Box>
 
           {true && (
@@ -57,6 +60,7 @@ export function NavBar({logout}) {
                 onClose={handleClose}
               >
                 <MenuItem onClick={toProfile}>Profile</MenuItem>
+                <MenuItem onClick={toCreate}>Create job</MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>

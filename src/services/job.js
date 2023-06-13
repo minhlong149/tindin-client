@@ -60,17 +60,13 @@ class JobService {
     }
   };
 
-  searchJobs = async (searchTerm) => {
+  searchJobs = async (searchTerm, userId) => {
     try {
-      const response = await axios.get(`/api/jobs?search=${searchTerm}`);
+      const response = await axios.get(`/api/jobs?jobTitle=${searchTerm}&applicantId=${userId}`);
       const results = response.data;
-      // Process and filter the job search results
-      const filteredJobs = results.filter((job) => {
-        return job.title.includes(searchTerm);
-      });
-      console.log('Filtered job results:', filteredJobs);
-      return filteredJobs;
+      return results;
     } catch (error) {
+      console.log(error);
       throw new Error(`Error searching jobs: ${error.message}`);
     }
   };

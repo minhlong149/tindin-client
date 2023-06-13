@@ -10,8 +10,11 @@ import {
   Divider,
 } from '@mui/material';
 import JobService from '../../services/job.js';
+import { useContext } from 'react';
+import { UserContext } from '../../App.jsx';
 
 function Search() {
+  const user = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizations, setFilteredOrganizations] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -33,12 +36,12 @@ function Search() {
         setFilteredOrganizations([]);
       });
 
-    JobService.searchJobs(searchTerm)
+    JobService.searchJobs(searchTerm, user.user.account_id)
       .then((jobs) => {
-        const filteredJobs = jobs.filter((job) =>
-          job.title.toLowerCase().includes(searchTerm.toLowerCase()),
-        );
-        setFilteredJobs(filteredJobs);
+        // const filteredJobs = jobs.filter((job) =>
+        //   job.title.toLowerCase().includes(searchTerm.toLowerCase()),
+        // );
+        setFilteredJobs(jobs);
       })
       .catch((error) => {
         console.error('Error searching jobs:', error);
@@ -169,9 +172,11 @@ function Search() {
           <p>Loading jobs...</p>
         ) : filteredJobs.length > 0 ? (
           <ul>
-            {filteredJobs.map((job) => (
+            {filteredJobs.map((job) =>{
+              console.log(job)
+              return (
               <li key={job.id}>{job.title}</li>
-            ))}
+            )})}
           </ul>
         ) : (
           <p>No jobs found.</p>

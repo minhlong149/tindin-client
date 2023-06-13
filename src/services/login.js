@@ -41,26 +41,32 @@
 
 class LoginService {
   login(credential) {
+    if (credential.username !== 'admin') {
+      return {
+        user: {
+          account_id: 4,
+          username: 'John',
+          role: 'CANDIDATE',
+        },
+      };
+    }
+
     return {
       user: {
-        account_id:4,
+        account_id: 5,
         username: 'John',
-        role: 'CANDIDATE',
+        role: 'RECRUITER',
       },
     };
   }
 
-  storeUserToLocalStorage(user) {
-  }
+  storeUserToLocalStorage(user) {}
 
-  getUserFromLocalStorage() {
-  }
+  getUserFromLocalStorage() {}
 
-  removeUserFromLocalStorage() {
-  }
+  removeUserFromLocalStorage() {}
 
-  createNewAccount(credential) {
-  }
+  createNewAccount(credential) {}
 }
 
 export default new LoginService();

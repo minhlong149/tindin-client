@@ -120,9 +120,11 @@ function Jobs() {
   const handleSearch = () => {
     event.preventDefault();
     // Lấy giá trị của thanh tìm kiếm
-    const searchTerm = document.querySelector('input[aria-label="Enter job title"]').value;
+    const search = document.querySelector('input[aria-label="Enter job title"]').value;
     // Điều hướng đến trang kết quả tìm kiếm và truyền giá trị của thanh tìm kiếm vào đường dẫn URL
-    navigate(`/search?query=${searchTerm}`);
+    console.log(search);
+    navigate(`/search`, { state: search});
+    
   };
 
   return (
@@ -256,11 +258,11 @@ function Jobs() {
         </Box>
         <Stack direction='row' spacing={2}>
           {org.slice(0, 5).map((organization, index) => (
-            <Card sx={{ width: 1, height: 400 }}>
+            <Card sx={{ width: 1, height: 450 }}>
               <CardActionArea>
                 <CardMedia
                   component='img'
-                  height='250'
+                  height= '250'
                   image='https://www.upenn.edu/themes/custom/penn_global/assets/img/simplified-shield.ico'
                   alt=''
                   onClick={() => clickOrganization(organization)}

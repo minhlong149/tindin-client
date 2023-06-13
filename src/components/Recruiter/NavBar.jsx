@@ -18,7 +18,7 @@ export function NavBar({logout}) {
   const handleClose = () => setAnchorEl(null);
   const toProfile = () => {
     handleClose();
-    navigate('/organizations/3');
+    navigate('/organizations/283');
   }
   return (
     <AppBar position='static'>

@@ -17,14 +17,16 @@ import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useLocation, useParams } from 'react-router-dom';
 function Search() {
   const user = useContext(UserContext);
+  const { state: search } = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizations, setFilteredOrganizations] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState('');
-
+  console.log(search);
   const handleSearch = () => {
     setIsLoading(true);
 
@@ -141,8 +143,8 @@ function Search() {
                   <MenuItem value={10}>cần Thơ</MenuItem>
                   <MenuItem value={20}>Đà Nẵng</MenuItem>
                   <MenuItem value={30}>Hà Nội</MenuItem>
-                  <MenuItem value={30}>Hải Phòng</MenuItem>
-                  <MenuItem value={30}>Hồ Chí Minh</MenuItem>
+                  <MenuItem value={40}>Hải Phòng</MenuItem>
+                  <MenuItem value={50}>Hồ Chí Minh</MenuItem>
                 </Select>
               </FormControl>
             </Paper>

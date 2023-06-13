@@ -10,10 +10,10 @@ import Organization from '../Organization/Organization.jsx';
 import Profile from './Profile.jsx';
 
 
-function Candidate() {
+function Candidate({logout}) {
   return (
     <>
-      <NavBar />
+      <NavBar logout={logout} />
 
       {/* <Typography variant='h1'>Candidate</Typography> */}
       <Routes>

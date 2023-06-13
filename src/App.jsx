@@ -10,7 +10,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
 
-  const updateUser = async (user) => {
+  const updateUser = async (user = null) => {
     try {
       if (user == null) {
         // Handle logout
@@ -36,6 +36,12 @@ function App() {
   //   const loggedUserJSON = loginServices.getUserFromLocalStorage();
   //   setUser(loggedUserJSON);
   // }, []);
+
+  const logout = () => {
+    console.log('Logout');
+    loginServices.removeUserFromLocalStorage();
+    setUser(null);
+  };
 
   return (
     <>

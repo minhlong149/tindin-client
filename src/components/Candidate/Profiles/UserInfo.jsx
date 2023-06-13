@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { EditForm } from './EditForm';
 
 export function UserInfo({ applicant, handleSubmit }) {
@@ -60,7 +61,9 @@ export function UserInfo({ applicant, handleSubmit }) {
         {applicant.user.website && (
           <Stack direction='row' alignItems='center' spacing={2}>
             <WebsiteIcon />
-            <Typography variant='body2'>{applicant.user.website}</Typography>
+            <Link to={applicant.user.website}>
+              <Typography variant='body2'>{applicant.user.website}</Typography>
+            </Link>
           </Stack>
         )}
       </Stack>

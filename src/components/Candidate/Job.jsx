@@ -87,13 +87,10 @@ function Job() {
             ></img>
             <Box paddingLeft={5}>
               <Typography variant='h5'>{job.title}</Typography>
-              <Link to='/organization' style={{ textDecoration: 'none' }}>
+                <Link to={'/organizations/' + org.id} style={{ textDecoration: 'none' }}>
                 <Typography variant='boby1'>{org.name}</Typography>
               </Link>
 
-              <Link to='/organization' style={{ textDecoration: 'none' }}>
-                <Typography variant='boby1'>{org.name}</Typography>
-              </Link>
               <Typography variant='body1'>
                 <span>Location: </span>
                 <span>{org.location}</span>

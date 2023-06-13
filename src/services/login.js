@@ -43,9 +43,9 @@ class LoginService {
   login(credential) {
     return {
       user: {
-        account_id:5,
+        account_id:4,
         username: 'John',
-        role: 'RECRUITER',
+        role: 'CANDIDATE',
       },
     };
   }

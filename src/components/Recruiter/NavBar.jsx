@@ -10,10 +10,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export function NavBar() {
+export function NavBar({logout}) {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => setAnchorEl(null);
+  const toProfile = () => {
+    handleClose();
+    navigate('/organizations/3');
+  }
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -50,8 +56,8 @@ export function NavBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={toProfile}>Profile</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

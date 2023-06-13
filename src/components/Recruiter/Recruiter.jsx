@@ -7,12 +7,13 @@ import Candidate from './Candidate.jsx';
 import { NavBar } from './NavBar.jsx';
 import CreateJobs from './CreateJobs.jsx';
 import EditJob from './EditJob.jsx';
+import Organization from '../Organization/Organization.jsx';
 
-function Recruiter() {
+function Recruiter({logout}) {
   return (
     <>
-      <NavBar />
-    
+      <NavBar logout={logout} />
+
       {/* <Typography variant='h1'>Recruiter</Typography> */}
       <Routes>
         {/* Recruiter home page, list of created jobs */}
@@ -34,7 +35,7 @@ function Recruiter() {
         <Route path='/candidates/:candidateId' element={<Candidate />} />
 
         {/* View & Update recruiter profile, including organization details */}
-        {/* <Route path='/:username' element={<Profile />} /> */}
+        <Route path='/organizations/:organizationId' element={<Organization />} />
       </Routes>
     </>
   );

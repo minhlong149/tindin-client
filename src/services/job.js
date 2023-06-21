@@ -35,12 +35,18 @@ class JobService {
         );
     }
 
-    unapplyJob(jobId, applicantId) {
-        return axios.delete(`/api/jobs/${jobId}`, { data: { applicantId } });
+  unapplyJob(jobId, applicantId) {
+
+      return axios.delete(`/api/jobs/${jobId}`, {
+        data: applicantId,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
     getListApplicantByJobId(jobId)
     {
-        return axios.get(`api/jobs/${jobId}/applicants`);
+        return axios.get(`/api/jobs/${jobId}/applicants`);
     }
   
   getAppliedJobs = async () => {

@@ -16,7 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 
-const pages = ['Việc làm', 'Công ty'];
+const pages = ['Jobs', 'Organizations'];
 const settings = ['Profile', 'Logout'];
 
 function NavBar({ logout }) {
@@ -26,6 +26,13 @@ function NavBar({ logout }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+  const selectPage = (page) => {
+    if (page === 'Organizations') {
+      navigate('/organizations');
+    } else {
+      navigate('/jobs');
+    }
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -93,7 +100,7 @@ function NavBar({ logout }) {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem key={page} onClick={() => selectPage(page)}>
                     <Typography textAlign='center'>{page}</Typography>
                   </MenuItem>
                 ))}
@@ -123,7 +130,7 @@ function NavBar({ logout }) {
               {pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => selectPage(page)}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   {page}

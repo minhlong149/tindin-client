@@ -8,8 +8,8 @@ import Search from './Search.jsx';
 
 import Organization from '../Organization/Organization.jsx';
 import Profile from './Profile.jsx';
-
-
+import Organizations from '../Organization/Organizations.jsx';
+import AllJobs from './AllJobs.jsx';
 function Candidate({logout}) {
   return (
     <>
@@ -19,7 +19,8 @@ function Candidate({logout}) {
       <Routes>
         {/* Candidate home page, list of jobs */}
         <Route path='/' element={<Jobs />} />
-
+        
+        <Route path='/jobs' element ={<AllJobs/>}/>
         {/* View details of a job & apply */}
         <Route path='/jobs/:jobId' element={<Job />} />
 
@@ -29,6 +30,8 @@ function Candidate({logout}) {
         {/* View organization details */}
         <Route path='/organizations/:organizationId' element={<Organization />} />
 
+        <Route path='/organizations' element={<Organizations/>}/>
+        
         {/* Search for jobs and organizations */}
         <Route path='/search' element={<Search />} />
 

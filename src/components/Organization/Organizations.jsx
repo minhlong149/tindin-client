@@ -180,16 +180,16 @@ function Organizations() {
                         />
                         {org.industry}
                       </Typography>
-                      <Typography gutterBottom variant='body1' component='div'>
+                      <Typography gutterBottom variant='h7' component='div'>
                         <LocationOnIcon
                           style={{ color: 'gray', fontSize: 'medium' }}
                           sx={{ mx: 1 }}
-                        />{' '}
+                        />
                         {org.location}
                       </Typography>
                       <Link
                         gutterBottom
-                        variant='body2'
+                        variant='h7'
                         component='div'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >

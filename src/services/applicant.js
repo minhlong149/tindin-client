@@ -35,34 +35,34 @@ class ApplicantService {
 
   getJobPT(userId, page) {
     return axios.get(
-      `api/jobs?applicantId=${userId}&pageNumber=${page}&pageSize=12&jobType=Part-time&jobTitle= `,
+      `api/jobs?applicantId=${userId}&pageNumber=${page}&pageSize=12&jobType=Part-time&minimumSalary=1&jobTitle=&jobLocation=`,
     );
   }
 
   getJobFT(userId, page) {
     return axios.get(
-      `api/jobs?applicantId=${userId}&pageNumber=${page}&pageSize=12&jobType=Full-time&jobTitle= `,
+      `api/jobs?applicantId=${userId}&pageNumber=${page}&pageSize=12&jobType=Full-time&minimumSalary=1&jobTitle=&jobLocation=`,
     );
   }
 
   getJobIT(userId, page) {
     const type = 'Technology, Information & Media';
     return axios.get(
-      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12`,
+      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12&minimumSalary=1&jobTitle=&jobLocation=`,
     );
   }
 
   getJobFS(userId, page) {
     const type = 'Financial Services';
     return axios.get(
-      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12`,
+      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12&minimumSalary=1&jobTitle=&jobLocation=`,
     );
   }
 
   getJobHospital(userId, page) {
     const type = 'Hospitals and Health Care';
     return axios.get(
-      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12`,
+      `api/jobs?applicantId=${userId}&pageNumber=${page}&organizationIndustry=${type}&pageSize=12&minimumSalary=1&jobTitle=&jobLocation=`,
     );
   }
 }

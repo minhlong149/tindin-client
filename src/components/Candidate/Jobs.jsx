@@ -25,6 +25,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
+import Footer from './Footer.jsx';
 const pages = ['Jobs', 'Company'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -134,7 +135,6 @@ function Jobs() {
       <Box
         id='background-image&searchbar'
         position={'relative'}
-        marginTop={8.5}
         sx={{
           position: 'relative',
           width: '100%',
@@ -161,9 +161,10 @@ function Jobs() {
               flexGrow: 1,
               maxWidth: 600,
               minWidth: 120,
-              m: 5,
+              m: 10,
+              marginTop: 10,
               px: 2,
-              py: 2,
+              py: 15,
             }}
             display='flex'
             flexDirection='column'
@@ -395,6 +396,7 @@ function Jobs() {
       >
         <img src='https://images.vietnamworks.com/logo/woori_cpbn_117981.png' width={1400} />
       </div>
+
     </>
   );
 }

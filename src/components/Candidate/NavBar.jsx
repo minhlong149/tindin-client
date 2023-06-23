@@ -50,7 +50,7 @@ function NavBar({ logout }) {
     <>
       <AppBar position='fixed'>
         <Container maxWidth='xl'>
-          <Toolbar disableGutters>
+          <Toolbar style={{minHeight:48}} disableGutters >
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
               <Typography
@@ -131,7 +131,7 @@ function NavBar({ logout }) {
                 <Button
                   key={page}
                   onClick={() => selectPage(page)}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 0, color: 'white', display: 'block' }}
                 >
                   {page}
                 </Button>
@@ -145,7 +145,7 @@ function NavBar({ logout }) {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: '45px' }}
+                sx={{ mt: '30px' }}
                 id='menu-appbar'
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -185,7 +185,7 @@ function NavBar({ logout }) {
           </Toolbar>
         </Container>
       </AppBar>
-      <Box marginTop={8.5}></Box>
+      <Box marginTop={6}></Box>
     </>
   );
 }

@@ -5,9 +5,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 
 import { AppliedCandidates } from './AppliedCandidates.jsx';
+import { JobInfo } from './JobInfo.jsx';
 import { RecommendedCandidates } from './RecommendedCandidates.jsx';
 
 export function SelectedJob({ job }) {
@@ -15,9 +15,7 @@ export function SelectedJob({ job }) {
   return (
     <Card>
       <CardContent>
-        <Typography variant='h5' component='div'>
-          {job.title}
-        </Typography>
+        <JobInfo job={job} />
       </CardContent>
 
       <Tabs value={value} onChange={(event, newValue) => setValue(newValue)}>
@@ -44,5 +42,3 @@ function TabPanel(props) {
     </div>
   );
 }
-
-

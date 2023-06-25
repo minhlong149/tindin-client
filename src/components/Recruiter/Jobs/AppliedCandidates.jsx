@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import List from '@mui/material/List';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import JobService from '../../../services/job.js';
@@ -9,6 +10,11 @@ import { CandidateSmall } from './CandidateSmall.jsx';
 export function AppliedCandidates({ jobId }) {
   const [candidatesStatus, setCandidatesStatus] = useState('Loading');
   const [candidates, setCandidates] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const candidatesFiltered =
+    searchTerm !== ''
+      ? candidates.filter((candidate) => JSON.stringify(candidate).includes(searchTerm))
+      : candidates;
 
   const getCandidatesByJob = async (jobId) => {
     try {
@@ -45,12 +51,23 @@ export function AppliedCandidates({ jobId }) {
       </Typography>
     );
   }
-  
+
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {candidates.map((candidate) => (
-        <CandidateSmall candidate={candidate} />
-      ))}
-    </List>
+    <>
+      <TextField
+        label='Search'
+        helperText='Title, locations, skills,...'
+        variant='outlined'
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        sx={{ width: '100%', bgcolor: 'background.paper' }}
+      />
+
+      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        {candidatesFiltered.map((candidate) => (
+          <CandidateSmall candidate={candidate} />
+        ))}
+      </List>
+    </>
   );
 }

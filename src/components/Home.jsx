@@ -9,7 +9,11 @@ function Home({ logout }) {
   const user = useContext(UserContext);
   return (
     <section>
-      {user.user.role === 'CANDIDATE' ? <Candidate /> : <Recruiter />}
+      {user?.user?.role === 'CANDIDATE' ? (
+        <Candidate logout={logout} />
+      ) : (
+        <Recruiter logout={logout} />
+      )}
       {/* <Button variant='contained' onClick={logout}>
         Logout
       </Button> */}

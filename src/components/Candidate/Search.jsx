@@ -8,16 +8,20 @@ import {
   MenuItem,
   Select,
   Divider,
+  Typography,
+  Card,
+  CardActionArea,
+  Grid,
+  Tabs,
+  Tab,
 } from '@mui/material';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import JobService from '../../services/job.js';
 import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 function Search() {
   const user = useContext(UserContext);
   const { state: search } = useLocation();
@@ -26,7 +30,8 @@ function Search() {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState('');
-  console.log(search);
+  const [value, setValue] = useState(0);
+
   const handleSearch = () => {
     setIsLoading(true);
 
@@ -44,9 +49,6 @@ function Search() {
 
     JobService.searchJobs(searchTerm, user.user.account_id)
       .then((jobs) => {
-        // const filteredJobs = jobs.filter((job) =>
-        //   job.title.toLowerCase().includes(searchTerm.toLowerCase()),
-        // );
         setFilteredJobs(jobs);
       })
       .catch((error) => {
@@ -57,11 +59,14 @@ function Search() {
         setIsLoading(false);
       });
   };
+
   const handleChange = (event) => {
     setCity(event.target.value);
   };
-  const [value, setValue] = useState(0);
 
+  const inforJob = (job) => {
+    navigate(`/jobs/${job.id}`);
+  };
 
   return (
     <div>
@@ -138,9 +143,9 @@ function Search() {
                   inputProps={{ 'aria-label': 'Select city' }}
                 >
                   <MenuItem disabled value=''>
-                    <em>Select city</em>{' '}
+                    <em>Select city</em>
                   </MenuItem>
-                  <MenuItem value={10}>cần Thơ</MenuItem>
+                  <MenuItem value={10}>Cần Thơ</MenuItem>
                   <MenuItem value={20}>Đà Nẵng</MenuItem>
                   <MenuItem value={30}>Hà Nội</MenuItem>
                   <MenuItem value={40}>Hải Phòng</MenuItem>
@@ -162,40 +167,93 @@ function Search() {
       <Card sx={{ width: '100%', mx: 5 }}>
         <Tabs value={value} onChange={(event, newValue) => setValue(newValue)}>
           <Tab label='Organizations' />
-          <Tab label='Job' />
+          <Tab label='Jobs' />
         </Tabs>
 
         <TabPanel value={value} index={0}>
           <div>
-            <h2>Filtered Organizations:</h2>
+            <Typography variant='h6' align='center' mt={2}>
+              Filtered Organizations:
+            </Typography>
             {isLoading ? (
-              <p>Loading organizations...</p>
+              <Typography variant='body1' align='center'>
+                Loading organizations...
+              </Typography>
             ) : filteredOrganizations.length > 0 ? (
               <ul>
                 {filteredOrganizations.map((org) => (
-                  <li key={org.id}>{org.name}</li>
+                  <li key={org.id}>
+                    <Typography variant='body1'>{org.name}</Typography>
+                  </li>
                 ))}
               </ul>
             ) : (
-              <p>No organizations found.</p>
+              <Typography variant='body1' align='center'>
+                No organizations found.
+              </Typography>
             )}
           </div>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
           <div>
-            <h2>Filtered Jobs:</h2>
+            <Typography variant='h6' align='center' mt={2}>
+              Filtered Jobs:
+            </Typography>
             {isLoading ? (
-              <p>Loading jobs...</p>
+              <Typography variant='body1' align='center'>
+                Loading jobs...
+              </Typography>
             ) : filteredJobs.length > 0 ? (
-              <ul>
-                {filteredJobs.map((job) => {
-                  console.log(job);
-                  return <li key={job.id}>{job.title}</li>;
-                })}
-              </ul>
+              <Carousel>
+                <Grid container spacing={2} columnSpacing={2} key={page}>
+                  {filteredJobs.map((job, index) => (
+                    <Grid item xs={3} key={index}>
+                      <CardActionArea onClick={() => inforJob(job)}>
+                        <Card style={{ width: 300, height: 150 }}>
+                          <Typography
+                            gutterBottom
+                            variant='h6'
+                            component='div'
+                            textAlign={'center'}
+                            margin={2}
+                          >
+                            {job.title}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant='h7'
+                            component='div'
+                            textAlign={'center'}
+                          >
+                            {job.organizationDto.name}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant='body1'
+                            component='div'
+                            textAlign={'center'}
+                          >
+                            {job.salary} vnđ
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant='body2'
+                            component='div'
+                            textAlign={'center'}
+                          >
+                            {job.organizationDto.location}
+                          </Typography>
+                        </Card>
+                      </CardActionArea>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Carousel>
             ) : (
-              <p>No jobs found.</p>
+              <Typography variant='body1' align='center'>
+                No jobs found.
+              </Typography>
             )}
           </div>
         </TabPanel>

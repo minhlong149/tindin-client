@@ -53,16 +53,14 @@ export default function Organization() {
     <List
       sx={{
         width: '100%',
-        maxWidth: 360,
         bgcolor: 'background.paper',
       }}
     >
       {/* <Stack alignItems='center' spacing={3}> */}
-      <Stack direction='row' spacing={4} alignItems='center'>
+      <Stack direction='row' spacing={4} alignItems='center' variant='h3'>
         <ListItem>
           {organization.name && (
             <Stack direction='row' alignItems='center' spacing={2}>
-              <LocationOnIcon />
               <Typography variant='body2'>{organization.name}</Typography>
             </Stack>
           )}
@@ -87,13 +85,16 @@ export default function Organization() {
           {organization.website && (
             <Stack direction='row' alignItems='center' spacing={2}>
               <WebsiteIcon />
-              <Typography variant='body2'>{organization.website}</Typography>
+              <Link to={organization.website} style={{ textDecoration: 'none' }}>
+                <Typography variant='body2'>{organization.website}</Typography>
+              </Link>
             </Stack>
           )}
         </ListItem>
         <ListItem>
           {organization.location && (
             <Stack direction='row' alignItems='center' spacing={2}>
+              <LocationOnIcon />
               <Typography variant='body2'>{organization.location}</Typography>
             </Stack>
           )}
@@ -110,7 +111,7 @@ export default function Organization() {
       <Box sx={{ flexDirection: 'column', alignItems: 'center' }}>
         {job && job.length > 0 && (
           <>
-            <Typography variant='h5' marginTop={10} marginBottom={3}>
+            <Typography variant='h5' fo marginTop={10} marginBottom={3}>
               List jobs posted
             </Typography>
             {job.map((job) => (

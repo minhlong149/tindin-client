@@ -10,14 +10,23 @@ import {
   Divider,
 } from '@mui/material';
 import JobService from '../../services/job.js';
-
+import { useContext } from 'react';
+import { UserContext } from '../../App.jsx';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { useLocation, useParams } from 'react-router-dom';
 function Search() {
+  const user = useContext(UserContext);
+  const { state: search } = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizations, setFilteredOrganizations] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState('');
-
+  console.log(search);
   const handleSearch = () => {
     setIsLoading(true);
 
@@ -33,12 +42,12 @@ function Search() {
         setFilteredOrganizations([]);
       });
 
-    JobService.searchJobs(searchTerm)
+    JobService.searchJobs(searchTerm, user.user.account_id)
       .then((jobs) => {
-        const filteredJobs = jobs.filter((job) =>
-          job.title.toLowerCase().includes(searchTerm.toLowerCase()),
-        );
-        setFilteredJobs(filteredJobs);
+        // const filteredJobs = jobs.filter((job) =>
+        //   job.title.toLowerCase().includes(searchTerm.toLowerCase()),
+        // );
+        setFilteredJobs(jobs);
       })
       .catch((error) => {
         console.error('Error searching jobs:', error);
@@ -51,6 +60,8 @@ function Search() {
   const handleChange = (event) => {
     setCity(event.target.value);
   };
+  const [value, setValue] = useState(0);
+
 
   return (
     <div>
@@ -132,8 +143,8 @@ function Search() {
                   <MenuItem value={10}>cần Thơ</MenuItem>
                   <MenuItem value={20}>Đà Nẵng</MenuItem>
                   <MenuItem value={30}>Hà Nội</MenuItem>
-                  <MenuItem value={30}>Hải Phòng</MenuItem>
-                  <MenuItem value={30}>Hồ Chí Minh</MenuItem>
+                  <MenuItem value={40}>Hải Phòng</MenuItem>
+                  <MenuItem value={50}>Hồ Chí Minh</MenuItem>
                 </Select>
               </FormControl>
             </Paper>
@@ -148,35 +159,56 @@ function Search() {
         </Box>
       </Box>
 
-      <div>
-        <h2>Filtered Organizations:</h2>
-        {isLoading ? (
-          <p>Loading organizations...</p>
-        ) : filteredOrganizations.length > 0 ? (
-          <ul>
-            {filteredOrganizations.map((org) => (
-              <li key={org.id}>{org.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No organizations found.</p>
-        )}
-      </div>
+      <Card sx={{ width: '100%', mx: 5 }}>
+        <Tabs value={value} onChange={(event, newValue) => setValue(newValue)}>
+          <Tab label='Organizations' />
+          <Tab label='Job' />
+        </Tabs>
 
-      <div>
-        <h2>Filtered Jobs:</h2>
-        {isLoading ? (
-          <p>Loading jobs...</p>
-        ) : filteredJobs.length > 0 ? (
-          <ul>
-            {filteredJobs.map((job) => (
-              <li key={job.id}>{job.title}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No jobs found.</p>
-        )}
-      </div>
+        <TabPanel value={value} index={0}>
+          <div>
+            <h2>Filtered Organizations:</h2>
+            {isLoading ? (
+              <p>Loading organizations...</p>
+            ) : filteredOrganizations.length > 0 ? (
+              <ul>
+                {filteredOrganizations.map((org) => (
+                  <li key={org.id}>{org.name}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No organizations found.</p>
+            )}
+          </div>
+        </TabPanel>
+
+        <TabPanel value={value} index={1}>
+          <div>
+            <h2>Filtered Jobs:</h2>
+            {isLoading ? (
+              <p>Loading jobs...</p>
+            ) : filteredJobs.length > 0 ? (
+              <ul>
+                {filteredJobs.map((job) => {
+                  console.log(job);
+                  return <li key={job.id}>{job.title}</li>;
+                })}
+              </ul>
+            ) : (
+              <p>No jobs found.</p>
+            )}
+          </div>
+        </TabPanel>
+      </Card>
+    </div>
+  );
+}
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div hidden={value !== index} {...other}>
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }

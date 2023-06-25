@@ -17,7 +17,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 
 const pages = ['Jobs', 'Organizations'];
-const settings = ['Profile', 'Logout'];
+const settings = ['Profile','Applied', 'Logout'];
 
 function NavBar({ logout }) {
   const user = useContext(UserContext);
@@ -50,7 +50,7 @@ function NavBar({ logout }) {
     <>
       <AppBar position='fixed'>
         <Container maxWidth='xl'>
-          <Toolbar style={{minHeight:48}} disableGutters >
+          <Toolbar style={{ minHeight: 48 }} disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
               <Typography
@@ -141,7 +141,7 @@ function NavBar({ logout }) {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar alt='Avatar of user' src={user.user.profile_url} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -169,6 +169,15 @@ function NavBar({ logout }) {
                     <MenuItem key={setting}>
                       <Link
                         to={'/' + user.user.account_id}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                      >
+                        <Typography textAlign='center'>{setting}</Typography>
+                      </Link>
+                    </MenuItem>
+                  ) : setting === 'Applied' ? (
+                    <MenuItem key={setting}>
+                      <Link
+                        to={'/jobs/saved'}
                         style={{ color: 'inherit', textDecoration: 'none' }}
                       >
                         <Typography textAlign='center'>{setting}</Typography>

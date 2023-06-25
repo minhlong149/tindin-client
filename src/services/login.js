@@ -47,6 +47,7 @@ class LoginService {
           account_id: 4,
           username: 'John',
           role: 'CANDIDATE',
+          profile_url: 'https://robohash.org/set_set4/Lucien.png',
         },
       };
     }

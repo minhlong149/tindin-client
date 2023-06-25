@@ -49,9 +49,9 @@ class JobService {
         return axios.get(`/api/jobs/${jobId}/applicants`);
     }
   
-  getAppliedJobs = async () => {
+  getAppliedJobs = async (userId) => {
     try {
-      const response = await axios.get(`/applicants/:id/jobs`);
+      const response = await axios.get(`/api/applicants/${userId}/jobs`);
       return response.data;
     } catch (error) {
       throw error;

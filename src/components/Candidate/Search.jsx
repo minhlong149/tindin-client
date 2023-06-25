@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   Button,
@@ -15,12 +15,13 @@ import {
   Tabs,
   Tab,
 } from '@mui/material';
-import { Carousel } from 'react-responsive-carousel';
+import Carousel from 'react-material-ui-carousel';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import JobService from '../../services/job.js';
-import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 
 function Search() {
   const user = useContext(UserContext);
@@ -29,6 +30,7 @@ function Search() {
   const [filteredOrganizations, setFilteredOrganizations] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
   const [city, setCity] = useState('');
   const [value, setValue] = useState(0);
 

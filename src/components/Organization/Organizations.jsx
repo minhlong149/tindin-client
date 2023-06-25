@@ -17,7 +17,7 @@ import OrganizationService from '../../services/organization.js'
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LanguageIcon from '@mui/icons-material/Language';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function Organizations() {
   const theme = createTheme({
     components: {
@@ -30,7 +30,7 @@ function Organizations() {
       },
     },
   });
-
+  const navigate = useNavigate();
   const [org, setOrg] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");

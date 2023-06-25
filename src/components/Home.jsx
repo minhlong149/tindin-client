@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import { UserContext } from '../App.jsx';
 import Candidate from './Candidate/Candidate.jsx';
 import Recruiter from './Recruiter/Recruiter.jsx';
+import Footer from './Candidate/Footer.jsx';
 
 function Home({ logout }) {
   const user = useContext(UserContext);
@@ -17,6 +18,7 @@ function Home({ logout }) {
       {/* <Button variant='contained' onClick={logout}>
         Logout
       </Button> */}
+      <Footer/>
     </section>
   );
 }

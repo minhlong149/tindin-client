@@ -25,7 +25,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
-const pages = ['Việc làm', 'Công ty'];
+import Footer from './Footer.jsx';
+const pages = ['Jobs', 'Company'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Jobs() {
@@ -134,7 +135,6 @@ function Jobs() {
       <Box
         id='background-image&searchbar'
         position={'relative'}
-        marginTop={8.5}
         sx={{
           position: 'relative',
           width: '100%',
@@ -161,9 +161,10 @@ function Jobs() {
               flexGrow: 1,
               maxWidth: 600,
               minWidth: 120,
-              m: 5,
+              m: 10,
+              marginTop: 10,
               px: 2,
-              py: 2,
+              py: 15,
             }}
             display='flex'
             flexDirection='column'
@@ -250,7 +251,7 @@ function Jobs() {
       <Box id='top-cty' sx={{ px: 5, py: 5, backgroundColor: '#F7F7F7' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant='h4' margin={2}>
-            Công ty nổi bật
+            Recommended organizations in Ho Chi Minh
           </Typography>
           <Link component='button' variant='body2' color='inherit' onClick={() => handleSearch()}>
             Xem thêm
@@ -262,7 +263,7 @@ function Jobs() {
               <CardActionArea>
                 <CardMedia
                   component='img'
-                  height= '250'
+                  height='250'
                   image='https://www.upenn.edu/themes/custom/penn_global/assets/img/simplified-shield.ico'
                   alt=''
                   onClick={() => clickOrganization(organization)}
@@ -303,7 +304,7 @@ function Jobs() {
                 borderTopRightRadius: 20,
               }}
             >
-              Việc làm gợi ý
+              Suggested jobs
             </Typography>
             <Box
               sx={{
@@ -395,6 +396,7 @@ function Jobs() {
       >
         <img src='https://images.vietnamworks.com/logo/woori_cpbn_117981.png' width={1400} />
       </div>
+
     </>
   );
 }

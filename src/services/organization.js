@@ -24,6 +24,27 @@ class OrganizationService {
       throw error;
     }
   }
+
+  async getOrganization() {
+    try {
+      const url = `/api/organizations`;
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  async getOrganizationByName(organizationName) {
+    try {
+      const url = `/api/organizations?organizationName=${organizationName}`;
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 export default new OrganizationService();

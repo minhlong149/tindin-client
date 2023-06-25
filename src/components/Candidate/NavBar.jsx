@@ -16,8 +16,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useContext } from 'react';
 import { UserContext } from '../../App.jsx';
 
-const pages = ['Việc làm', 'Công ty'];
-const settings = ['Profile', 'Logout'];
+const pages = ['Jobs', 'Organizations'];
+const settings = ['Profile','Applied', 'Logout'];
 
 function NavBar({ logout }) {
   const user = useContext(UserContext);
@@ -26,6 +26,13 @@ function NavBar({ logout }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+  const selectPage = (page) => {
+    if (page === 'Organizations') {
+      navigate('/organizations');
+    } else {
+      navigate('/jobs');
+    }
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -43,7 +50,7 @@ function NavBar({ logout }) {
     <>
       <AppBar position='fixed'>
         <Container maxWidth='xl'>
-          <Toolbar disableGutters>
+          <Toolbar style={{ minHeight: 48 }} disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
               <Typography
@@ -93,7 +100,7 @@ function NavBar({ logout }) {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem key={page} onClick={() => selectPage(page)}>
                     <Typography textAlign='center'>{page}</Typography>
                   </MenuItem>
                 ))}
@@ -123,8 +130,8 @@ function NavBar({ logout }) {
               {pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={() => selectPage(page)}
+                  sx={{ my: 0, color: 'white', display: 'block' }}
                 >
                   {page}
                 </Button>
@@ -134,11 +141,11 @@ function NavBar({ logout }) {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar alt='Avatar of user' src={user.user.profile_url} />
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: '45px' }}
+                sx={{ mt: '30px' }}
                 id='menu-appbar'
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -167,6 +174,15 @@ function NavBar({ logout }) {
                         <Typography textAlign='center'>{setting}</Typography>
                       </Link>
                     </MenuItem>
+                  ) : setting === 'Applied' ? (
+                    <MenuItem key={setting}>
+                      <Link
+                        to={'/jobs/saved'}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                      >
+                        <Typography textAlign='center'>{setting}</Typography>
+                      </Link>
+                    </MenuItem>
                   ) : (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                       <Typography textAlign='center'>{setting}</Typography>
@@ -178,7 +194,7 @@ function NavBar({ logout }) {
           </Toolbar>
         </Container>
       </AppBar>
-      <Box marginTop={8.5}></Box>
+      <Box marginTop={6}></Box>
     </>
   );
 }

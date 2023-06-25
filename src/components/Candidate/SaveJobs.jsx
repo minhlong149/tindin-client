@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -10,15 +10,17 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import JobService from '../../services/job.js';
+import { UserContext } from '../../App.jsx';
 
 const SaveJobs = () => {
+  const user = useContext(UserContext);
   const [jobList, setJobList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchAppliedJobs = async () => {
     try {
       setIsLoading(true);
-      const jobs = await JobService.getAppliedJobs();
+      const jobs = await JobService.getAppliedJobs(user.user.account_id);
       setJobList(jobs);
       setIsLoading(false);
     } catch (error) {
@@ -70,13 +72,13 @@ const SaveJobs = () => {
                       {job.title}
                     </Typography>
                     <Typography variant='subtitle1' component='div' textAlign='center' mb={1}>
-                      {job.organizationDto.name}
+                      {job.recruiter.organization.name}
                     </Typography>
                     <Typography variant='body1' component='div' textAlign='center' mb={1}>
                       {job.salary} vnđ
                     </Typography>
                     <Typography variant='body2' component='div' textAlign='center'>
-                      {job.organizationDto.location}
+                      {job.recruiter.organization.location}
                     </Typography>
                   </Box>
                 </CardActionArea>

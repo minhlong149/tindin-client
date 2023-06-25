@@ -106,6 +106,7 @@ export default function Organization() {
           )}
         </ListItem>
       </Stack>
+      
       <Box sx={{ flexDirection: 'column', alignItems: 'center' }}>
         {job && job.length > 0 && (
           <>

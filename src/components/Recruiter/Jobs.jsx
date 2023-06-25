@@ -19,7 +19,7 @@ export default function Jobs() {
       const jobs = await RecruiterService.getJobsByRecruiter(user?.id || 5);
       setJobs(jobs);
       setJobIndex(0);
-      setStatus('Success')
+      setStatus('Success');
     } catch (error) {
       console.log(error.message);
       setStatus('Error');
@@ -37,16 +37,13 @@ export default function Jobs() {
   return status !== 'Success' ? (
     <p>{status}</p>
   ) : (
-    <>
-    {/* Navigation bar */}
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <JobsSideBar jobs={jobs} setJobIndex={setJobIndex} />
-        </Grid>
-        <Grid item xs={9}>
-          <SelectedJob job={jobs[jobIndex]} />
-        </Grid>
+    <Grid container spacing={2} padding={2}>
+      <Grid item xs={3}>
+        <JobsSideBar jobs={jobs} setJobIndex={setJobIndex} />
       </Grid>
-    </>
+      <Grid item xs={9}>
+        <SelectedJob job={jobs[jobIndex]} />
+      </Grid>
+    </Grid>
   );
 }
